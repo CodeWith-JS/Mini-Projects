@@ -1,4 +1,4 @@
-1 Minimalist Digital Clock
+# 1 Minimalist Digital Clock
 
 A sleek, browser-based digital clock widget with a dynamic greeting, built as part of a daily coding challenge. 
 
@@ -17,8 +17,12 @@ A sleek, browser-based digital clock widget with a dynamic greeting, built as pa
 2. Locate the `index.html` file.
 3. Double-click `index.html` to open it in any modern web browser. No local server or installation is required!
 
+<br>
+<br>
 
-2 Random Quote Generator
+---
+
+# 2 Random Quote Generator
 
 A minimalist, browser-based application that serves up random quotes at the click of a button. Built as Day 2 of a daily coding challenge series.
 
