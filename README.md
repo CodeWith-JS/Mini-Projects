@@ -14,8 +14,8 @@ A sleek, browser-based digital clock widget with a dynamic greeting, built as pa
 
 ## How to Run
 1. Download or clone these files to your local machine.
-2. Locate the `index.html` file.
-3. Double-click `index.html` to open it in any modern web browser. No local server or installation is required!
+2. Locate the `DynamicClock.html` file.
+3. Double-click `DynamicClock.html` to open it in any modern web browser. No local server or installation is required!
 
 <br>
 <br>
@@ -38,7 +38,7 @@ A minimalist, browser-based application that serves up random quotes at the clic
 
 ## How to Run
 1. Download or clone this repository to your local machine.
-2. Locate the `day2_quotes.html` file.
+2. Locate the `RandomQuoteGen.html` file.
 3. Double-click the file to open it in any modern web browser. No server setup or installation is required!
 
 ## Project Learnings
@@ -69,7 +69,7 @@ A browser-based financial calculator that computes monthly car loan payments bas
 
 ## How to Run
 1. Download or clone these files to your local machine.
-2. Locate the `day3_loan_calculator.html` file.
+2. Locate the `CarLoanInfo.html` file.
 3. Double-click the file to open it in any modern web browser. No local server or installation is required!
 
 ## Project Learnings
