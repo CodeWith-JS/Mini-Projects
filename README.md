@@ -47,6 +47,7 @@ A minimalist, browser-based application that serves up random quotes at the clic
 <br>
 <br>
 ----
+
 # 3 Car Loan Calculator
 
 A browser-based financial calculator that computes monthly car loan payments based on vehicle price, interest rate, term length, and down payment. Built as Day 3 of a daily coding challenge series.
@@ -75,6 +76,7 @@ A browser-based financial calculator that computes monthly car loan payments bas
 <br>
 <br>
 ----
+
 # 4 Timer
 
 A distraction-free, browser-based Pomodoro timer designed to track 25-minute focus sessions. Built as Day 4 of a daily coding challenge series.
