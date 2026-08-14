@@ -105,3 +105,46 @@ A distraction-free, browser-based Pomodoro timer designed to track 25-minute foc
 * Using `setInterval()` to create loops based on real-time clock cycles, and `clearInterval()` to destroy those loops.
 * Utilizing CSS pseudo-elements (`::before`) to create independent background layers for blur effects without affecting the foreground content.
 * Implementing absolute positioning for foolproof vertical and horizontal centering.
+
+<br>
+<br>
+<hr>
+
+#  5 Music Player
+
+A sleek, minimalist web-based music player built using pure HTML, CSS, and JavaScript. It features a dark theme UI, custom audio controls, and dynamic track switching.
+
+## ✨ Features
+
+* **Custom Controls:** Play, pause, skip forward, and skip backward.
+* **Progress Tracking:** Interactive progress bar with real-time current and total duration displays.
+* **Repeat Functionality:** Toggle a repeat mode to loop the current track continuously.
+* **Minimalist UI:** A clean, fixed-card layout with a dark theme and frosted background effects.
+* **Dynamic Loading:** Automatically updates the cover art, track title, and artist name when switching songs.
+
+## 🛠️ Technologies Used
+
+* **HTML5:** Audio element integration and structural layout.
+* **CSS3:** Flexbox, custom range sliders, absolute positioning, and hover animations.
+* **JavaScript (Vanilla):** DOM manipulation, event listeners (`timeupdate`, `ended`, `loadedmetadata`), and array-based playlist management.
+
+---
+
+## 📂 Folder Structure
+
+For the code to successfully find your songs and images, your files **must** be kept together in the exact following structure. 
+
+```text
+MusicPlayer/
+│
+├── MusicPlayer.html                 # Your main HTML file containing the player code
+│
+├── MusicBackground/            # Folder containing all visuals
+│   ├── background.jpg
+│   └── coverart.png
+│
+└── MusicAudio/                 # Folder containing all music tracks
+    ├── 7 Years [Official Music Video]_LHCob76kigA.mp3
+    ├── Another Love (Lyrics)_QFE0WqS2mhI.mp3
+    ├── Eastside (official video).mp3
+    └── Ed_Sheeran_-_Shape_of_You_[Official_Video].mp3
