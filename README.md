@@ -189,4 +189,41 @@ A sleek, self-contained task management tool built entirely with front-end techn
 <br>
 <hr>
 
+# 7 Movie Search
 
+A sleek, single-page web application that interfaces directly with the OMDb API to fetch and display movie information in real-time. Built with a minimalist dark grey aesthetic, this project demonstrates asynchronous JavaScript, API integration, and dynamic DOM manipulation.
+
+## 🚀 Features
+
+* **Live API Integration:** Communicates with the OMDb (Open Movie Database) API to retrieve up-to-date information on global film releases.
+* **Asynchronous Data Fetching:** Utilizes modern JavaScript `async/await` and the `fetch` API to handle network requests smoothly without freezing the user interface.
+* **Dynamic DOM Manipulation:** Generates and injects HTML structural elements (movie posters, cast details, plots, and metadata) on the fly based on the JSON response.
+* **Error Handling:** Built-in fallback logic to display a user-friendly error message if a movie title cannot be found in the database.
+* **Keyboard Accessibility:** Includes an event listener that allows users to seamlessly trigger a search by pressing the `Enter` key.
+
+## 🛠️ Technology Stack
+
+* **HTML5:** Semantic structure for the search interface and data presentation.
+* **CSS3:** Flexbox-driven layout with a cohesive dark theme (`#1a1a1a`, `#262626`) and responsive design principles.
+* **Vanilla JavaScript:** Core logic for API requests, JSON parsing, and DOM updates without the need for external libraries like React or jQuery.
+* **OMDb API:** A RESTful web service to obtain movie information.
+
+## 📋 How to Use
+
+1. **Run the App:** No build step or local server is required. Simply double-click the HTML file to open it in any modern web browser.
+2. **Search:** Type a movie title into the search bar (e.g., *Project Hail Mary*, *Train to Busan*, or *The Odyssey*) and press **Enter** or click the **Search** button.
+3. **View Results:** The application will instantly reveal the movie's official poster, release year, age rating, runtime, plot summary, director, cast, and genre.
+
+## 🔑 API Key Setup
+
+This application currently uses a public demo key (`d0061f7e`) for testing purposes. If you plan to deploy this project or use it heavily, you should replace it with your own free OMDb API key.
+
+1. Get a free API key from [OMDb API](http://www.omdbapi.com/apikey.aspx).
+2. Open the HTML file in your code editor.
+3. Locate the `apiKey` variable at the top of the `<script>` section.
+4. Replace the demo key with your new, private string: `const apiKey = 'YOUR_KEY_HERE';`
+
+
+<br>
+<br>
+<hr>
