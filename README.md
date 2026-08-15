@@ -148,3 +148,45 @@ MusicPlayer/
     ├── Another Love (Lyrics)_QFE0WqS2mhI.mp3
     ├── Eastside (official video).mp3
     └── Ed_Sheeran_-_Shape_of_You_[Official_Video].mp3
+```
+
+<br>
+<br>
+<hr>
+
+# 6 Kanban Board
+
+A sleek, self-contained task management tool built entirely with front-end technologies. Designed with a signature minimalist dark grey aesthetic, this project demonstrates dynamic DOM manipulation, persistent browser storage, and native browser APIs without relying on external libraries or frameworks.
+
+## 🚀 Features
+
+* **HTML5 Drag and Drop:** Seamlessly pick up, drag, and snap task cards across three distinct columns (To Do, In Progress, Done) using the native HTML5 Drag and Drop API.
+* **Persistent Local Storage:** Tasks are saved directly to the browser's `localStorage`. Your board state is instantly preserved and restored even after refreshing or closing the page.
+* **Dynamic Task Management:** Create new tasks on the fly using the input field (or by pressing the `Enter` key) and remove completed tasks using the hidden-on-hover delete button.
+* **Single-File Architecture:** The entire application, including the custom Base64-encoded background image, is contained within a single HTML file for ultimate portability and zero broken links.
+* **Tactile UI/UX:** Features soft CSS transitions, hover elevations (`transform: translateY`), and column drop-zone highlighting to provide immediate visual feedback.
+
+## 🛠️ Technology Stack
+
+* **HTML5:** Semantic structure and native Drag and Drop event handling (`dragstart`, `dragover`, `drop`).
+* **CSS3:** Flexbox-driven layouts, custom scrollbars, and a cohesive dark grey color palette (`#1a1a1a`, `#262626`, `#333333`).
+* **Vanilla JavaScript:** Core logic for DOM element creation, event listeners, and local storage read/write operations.
+
+## 📋 How to Use
+
+1. **Run the App:** There is no build step or server required. Simply double-click the `index.html` file to open it in any modern web browser.
+2. **Add a Task:** Type your task into the "What needs to be done?" input field and click **Add** or press **Enter**.
+3. **Move a Task:** Click and hold any task card, drag it over to a new column, and release the mouse to drop it.
+4. **Delete a Task:** Hover over any existing task card to reveal the **×** button in the top right corner. Click it to permanently remove the task.
+
+## 🧠 Core Concepts Explored
+
+* **Data Serialization:** Converting DOM elements into stringified HTML to store in `localStorage` and parsing them back upon page load.
+* **Event Propagation:** Utilizing `event.stopPropagation()` to ensure delete button clicks do not accidentally trigger the drag-and-drop event listeners.
+* **Base64 Image Encoding:** Embedding heavy visual assets directly into the CSS via Data URIs to eliminate external HTTP requests and folder dependencies.
+
+<br>
+<br>
+<hr>
+
+
