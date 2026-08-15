@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Movie Search</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #eeeeee;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #888888;
+            font-size: 0.95rem;
+        }
+
+        
+        .search-container {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            background-color: #262626;
+            border: 2px solid #333333;
+            color: #eeeeee;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #ff5252;
+            box-shadow: 0 0 10px rgba(255, 82, 82, 0.2);
+        }
+
+        .search-btn {
+            background-color: #ff5252;
+            color: #ffffff;
+            border: none;
+            padding: 0 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .search-btn:hover {
+            background-color: #ff3333;
+        }
+
+        .search-btn:active {
+            transform: scale(0.95);
+        }
+
+       
+        .movie-container {
+            display: flex;
+            background-color: #262626;
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            display: none; 
+        }
+
+        .movie-poster {
+            width: 300px;
+            background-color: #333333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-info {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .movie-title {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: 15px;
+            color: #aaaaaa;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .movie-meta span {
+            background-color: #333333;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .movie-plot {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .movie-cast {
+            font-size: 0.95rem;
+            color: #888888;
+        }
+
+        .movie-cast strong {
+            color: #eeeeee;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Film Finder</h1>
+        <p>Search the global database</p>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="movie-search" class="search-input" placeholder="Enter a movie title...">
+        <button class="search-btn" id="search-btn">Search</button>
+    </div>
+
+    <!-- This is the empty shell that JavaScript will fill with data -->
+    <div class="movie-container" id="movie-container">
+        <!-- Data will go here -->
+    </div>
+
+   <script>
+        // 1. The Setup: Grab our HTML elements and define  API key
+        const apiKey = 'd0061f7e'; 
+        const searchBtn = document.getElementById('search-btn');
+        const searchInput = document.getElementById('movie-search');
+        const movieContainer = document.getElementById('movie-container');
+
+        
+        searchBtn.addEventListener('click', function() {
+            const movieTitle = searchInput.value.trim();
+            if (movieTitle !== "") {
+                fetchMovieData(movieTitle);
+            }
+        });
+
+        // Go to the API and request the data
+        async function fetchMovieData(title) {
+            // This is the URL send to the OMDB server
+            const url = `https://www.omdbapi.com/?t=${title}&apikey=${apiKey}`;
+
+            try {
+                // Wait for the server to respond
+                const response = await fetch(url);
+                // Convert the response into the JSON format you saw earlier!
+                const data = await response.json(); 
+
+                // Check if the movie was actually found
+                if (data.Response === "True") {
+                    displayMovie(data);
+                } else {
+                    // If you search for gibberish, show an error
+                    movieContainer.innerHTML = `<h2 style="color: #ff5252; padding: 2rem;">Movie not found! Try again.</h2>`;
+                    movieContainer.style.display = 'flex';
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        //  Build the HTML using the JSON data
+        function displayMovie(data) {
+            // We use backticks (`) to inject our dynamic data variables using ${}
+            movieContainer.innerHTML = `
+                <div class="movie-poster">
+                    <img src="${data.Poster !== "N/A" ? data.Poster : "https://via.placeholder.com/300x450?text=No+Poster"}" alt="${data.Title} Poster">
+                </div>
+                <div class="movie-info">
+                    <h2 class="movie-title">${data.Title}</h2>
+                    <div class="movie-meta">
+                        <span>${data.Year}</span>
+                        <span>${data.Rated}</span>
+                        <span>${data.Runtime}</span>
+                    </div>
+                    <p class="movie-plot">${data.Plot}</p>
+                    <div class="movie-cast">
+                        <p><strong>Director:</strong> ${data.Director}</p>
+                        <p><strong>Cast:</strong> ${data.Actors}</p>
+                        <p><strong>Genre:</strong> ${data.Genre}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Un-hide the container now that it has data inside it
+            movieContainer.style.display = 'flex'; 
+        }
+        
+        //  Allow pressing Enter to search
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                searchBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
