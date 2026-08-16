@@ -227,3 +227,34 @@ This application currently uses a public demo key (`d0061f7e`) for testing purpo
 <br>
 <br>
 <hr>
+
+# 8 Valorant Protocol | Agent Roster
+
+A dynamic, single-page web application that displays the complete roster of Valorant agents. Built with a responsive CSS Grid and Vanilla JavaScript, this project fetches live data from the community-driven Valorant API and allows users to filter characters by their tactical roles.
+
+## 🚀 Features
+
+* **Live API Integration:** Automatically fetches up-to-date agent data (names, roles, descriptions, and official transparent portraits) using the `valorant-api.com` REST service.
+* **Instant Array Filtering:** Seamlessly filter the roster by role (Duelist, Initiator, Controller, Sentinel) using JavaScript's `.filter()` method for instant DOM updates without page reloads.
+* **Responsive CSS Grid:** Utilizes advanced `grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))` to automatically adapt the layout to any screen size.
+* **Sleek UI/UX:** Features a custom dark theme with "Valorant Red" accents (`#ff4655`), smooth hover elevations, image zoom transitions, and a parallax background overlay to maintain strict text contrast.
+* **Zero Dependencies:** Built entirely with native HTML5, CSS3, and modern ES6 JavaScript (`async/await`, `fetch`). No React, jQuery, or external CSS frameworks required.
+
+## 🛠️ Technology Stack
+
+* **HTML5:** Semantic document structure.
+* **CSS3:** Flexbox for alignment, CSS Grid for responsive cards, CSS transitions for interactive hover states, and linear gradients for image overlays.
+* **Vanilla JavaScript:** API requests, JSON parsing, dynamic DOM element creation, and event-driven array filtering.
+
+## 📋 How to Use
+
+1. **Run the App:** There is no build step, `npm install`, or local server required. Save the code as an `.html` file and open it directly in any modern web browser.
+2. **Browse Agents:** Scroll through the grid to view every playable agent currently in the game.
+3. **Filter by Role:** Click any of the category buttons at the top of the screen (e.g., "Duelists" or "Sentinels") to instantly isolate specific agent types. 
+4. **View All:** Click "All Agents" to reset the grid and view the full roster again.
+
+## 🧠 Code Architecture Notes
+
+* **Single-File Structure:** The entire application is contained within one file, utilizing internal `<style>` and `<script>` tags for ultimate portability.
+* **Data Mapping:** The raw API payload is mapped down to a simplified object structure (`name`, `role`, `desc`, `img`) before rendering, keeping the DOM generation logic clean and readable.
+* **CSS Object-Fit:** Portrait images utilize `object-fit: cover` and `object-position: top` to perfectly fill the uniform placeholder boxes regardless of the raw image dimensions.
