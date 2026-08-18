@@ -271,7 +271,7 @@ A dynamic, single-page web app that lets users search, browse, and explore anime
 
 ## 1. About the Project
 
-AniScope is a live content portal for anime discovery. Instead of static, hardcoded content, every card on the screen is pulled from a real, external data source in real time.
+Anime info is a live content portal for anime discovery. Instead of static, hardcoded content, every card on the screen is pulled from a real, external data source in real time.
 
 **Core features:**
 - **Live Search** — a debounced search bar that looks up any anime as you type, without spamming requests on every keystroke
