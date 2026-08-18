@@ -1,0 +1,74 @@
+//MADE BY CODEWITH-JS
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AniScope — Live Anime Discovery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="halftone-overlay" aria-hidden="true"></div>
+    <div class="header-inner">
+      <div class="brand">
+        <h1>Anime Info</h1>
+        <span class="brand-tag">Live AniList data</span>
+      </div>
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search any anime…"
+          autocomplete="off"
+          aria-label="Search anime"
+        />
+      </div>
+    </div>
+  </header>
+
+  <nav class="filter-bar" id="filter-bar" aria-label="Category filters">
+    <button class="filter-btn active" data-filter="airing" data-label="Top Airing">
+      Top Airing
+    </button>
+    <button class="filter-btn" data-filter="popular" data-label="Most Popular">
+      Most Popular
+    </button>
+    <button class="filter-btn" data-filter="upcoming" data-label="Top Upcoming">
+      Top Upcoming
+    </button>
+    <button class="filter-btn" data-filter="seasonal" data-label="Seasonal">
+      Seasonal
+    </button>
+  </nav>
+
+  <main>
+    <p id="grid-heading" class="grid-heading">Top Airing</p>
+    <div id="status-banner" class="status-banner hidden" role="status"></div>
+    <section id="anime-grid" class="anime-grid" aria-live="polite">
+      <!-- cards injected by script.js -->
+    </section>
+  </main>
+
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button id="modal-close" class="modal-close" aria-label="Close details">&times;</button>
+      <div id="modal-body" class="modal-body">
+        <!-- detail content injected by script.js -->
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
