@@ -258,3 +258,89 @@ A dynamic, single-page web application that displays the complete roster of Valo
 * **Single-File Structure:** The entire application is contained within one file, utilizing internal `<style>` and `<script>` tags for ultimate portability.
 * **Data Mapping:** The raw API payload is mapped down to a simplified object structure (`name`, `role`, `desc`, `img`) before rendering, keeping the DOM generation logic clean and readable.
 * **CSS Object-Fit:** Portrait images utilize `object-fit: cover` and `object-position: top` to perfectly fill the uniform placeholder boxes regardless of the raw image dimensions.
+
+<br>
+<br>
+<hr>
+
+# 9 Anime info  — Anime Discovery Dashboard
+
+A dynamic, single-page web app that lets users search, browse, and explore anime through a live, dark-themed dashboard. Built as a portfolio project to practice real-world frontend fundamentals: async data fetching, dynamic DOM rendering, and responsive UI design — all without a framework.
+
+---
+
+## 1. About the Project
+
+AniScope is a live content portal for anime discovery. Instead of static, hardcoded content, every card on the screen is pulled from a real, external data source in real time.
+
+**Core features:**
+- **Live Search** — a debounced search bar that looks up any anime as you type, without spamming requests on every keystroke
+- **Category Filters** — quick-switch buttons for Top Airing, Most Popular, Top Upcoming, and Seasonal releases
+- **Interactive Media Grid** — a responsive card grid showing poster art, score badges, airing status, and episode counts
+- **Detail Modal** — clicking any card opens an overlay with the full synopsis, genres, studio, and trailer link
+- **Error Handling & Retry** — if the data source has a temporary hiccup, the app retries automatically, and shows a manual Retry option if it still fails
+
+The goal was to build something that *feels* like a real product, not a static demo — the kind of project that shows up well in a portfolio because the data is alive.
+
+---
+
+## 2. Design & Tech Stack
+
+**Visual direction:** a dark, high-contrast UI inspired by manga print aesthetics — a subtle halftone dot texture in the header, and score badges styled like circular ink stamps, tilted slightly for a hand-stamped feel.
+
+**Design tokens:**
+- **Color:** deep navy/ink background, elevated card surfaces, a warm gold accent for scores and highlights, teal for "airing" status, and a muted rose for errors
+- **Typography:** a bold condensed display face for headings and titles (poster-like feel), a clean sans-serif for body text, and a monospace face for data — scores, episode counts — to give it a "readout" feel
+- **Layout:** CSS Grid with `auto-fill` and `minmax()` so the card grid reflows automatically across mobile, tablet, and desktop with no manual breakpoints needed for the grid itself
+
+**Tech stack:**
+| Layer | Technology |
+|---|---|
+| Structure | Semantic HTML5 |
+| Styling | Vanilla CSS3 — CSS Grid, Flexbox, custom properties (CSS variables), transitions |
+| Logic | Vanilla JavaScript (ES6+) — no frameworks, no build tools |
+
+Everything runs directly in the browser from three files — no bundler, no dependencies, no installation required.
+
+---
+
+## 3. JavaScript & API
+
+The app is powered by a **free, open-source, key-free public API** for anime data. No signup, no API key, and no backend server of our own — the browser talks directly to the API.
+
+**How the JavaScript is structured:**
+- **Fetch layer** — a single reusable function handles every outgoing request, including error handling and automatic retries if the server has a temporary issue
+- **Caching** — results are cached in memory per request, so switching back to a filter or search you've already used doesn't re-fetch the same data
+- **Render layer** — a dedicated function clears and rebuilds the grid from whatever data comes back, keeping data-fetching and DOM-building cleanly separated
+- **Race-condition protection** — if the user fires off multiple requests quickly (e.g. clicking filters fast), only the most recently requested response is allowed to render, so the screen never shows stale results
+- **Event layer** — separate setup functions wire up the filter buttons, the debounced search input, and the modal's open/close behavior
+
+The JavaScript is written entirely in modern ES6+ style: `async/await`, template literals, arrow functions, and `fetch()` — no libraries involved.
+
+---
+
+## 4. File Structure
+
+```
+anime-dashboard/
+├── index.html     → page structure & layout
+├── style.css      → all visual styling
+└── script.js      → all app logic & data fetching
+```
+
+**How the three files connect:**
+
+```
+index.html
+   ├─ loads style.css   (in <head>, applies the visual theme)
+   └─ loads script.js   (at the end of <body>, runs after the page loads)
+
+script.js
+   ├─ selects elements already defined in index.html
+   │    (search input, filter buttons, grid container, modal)
+   ├─ fetches data from the API
+   └─ injects new HTML into index.html's grid/modal containers,
+        which is then styled automatically by style.css
+```
+
+In short: **`index.html`** provides the empty skeleton and containers, **`script.js`** fills those containers with live data and handles all interaction, and **`style.css`** makes everything look intentional. None of the three files needs to be edited to update the others — new cards, new filters, or new modal content all flow through the same containers already defined in the HTML.
