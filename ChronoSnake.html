@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrono Snake</title>
+    <style>
+        /* Global & Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            user-select: none;
+        }
+
+        body {
+            background-color: #1a1a1a; 
+            background-image: linear-gradient(rgba(26, 26, 26, 0.90), rgba(26, 26, 26, 0.90)), url('https://imgs.search.brave.com/HPRccidIjSmvMQC_rG9VoeMnZrErhIbP-CM_J-vWkac/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvaGQvY29i/cmEtc25ha2UtZ2Ft/ZS1jaGFyYWN0ZXIt/dmJ1MDg5NWh1eHFp/ZWs1cC5qcGc');
+            background-size: cover;
+            background-position: center;
+            color: #eeeeee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Container Layout */
+        #console {
+            position: relative;
+            background-color: #262626;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+            border: 2px solid #333333;
+        }
+
+        /* HUD */
+        #hud {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hud-stat { color: #aaaaaa; }
+        .hud-value { color: #ffffff; margin-left: 5px; }
+        .charge-text { color: #ffd700; }
+
+        canvas {
+            background-color: #111111;
+            display: block;
+            border-radius: 6px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Post-processing: CRT Scanlines */
+        .scanlines {
+            position: absolute;
+            top: 55px; 
+            left: 20px;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            border-radius: 6px;
+            z-index: 10;
+        }
+
+        /* FX Overlays */
+        #glitch-overlay {
+            position: absolute;
+            top: 55px;
+            left: 20px;
+            width: 400px;
+            height: 400px;
+            background-color: rgba(255, 0, 50, 0.2);
+            mix-blend-mode: color-dodge;
+            pointer-events: none;
+            display: none;
+            z-index: 15;
+            animation: glitchAnim 0.1s infinite alternate;
+        }
+
+        @keyframes glitchAnim {
+            0% { transform: translateX(-2px) translateY(1px); }
+            100% { transform: translateX(2px) translateY(-1px); }
+        }
+
+        /* Modals */
+        #death-modal {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26, 26, 26, 0.9);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            border-radius: 12px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #death-modal h1 {
+            color: #ff4655;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        #death-modal p {
+            color: #aaaaaa;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            background-color: #333333;
+            color: #ffffff;
+            border: 2px solid transparent;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover { background-color: #444444; }
+        
+        .btn-rewind {
+            border-color: #ffd700;
+            color: #ffd700;
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+        
+        .btn-rewind:hover {
+            background-color: #ffd700;
+            color: #1a1a1a;
+        }
+
+        .hidden { display: none !important; }
+        
+        #game-over-screen {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        #restart-btn {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="console">
+        <div id="hud">
+            <div><span class="hud-stat">SCORE:</span><span id="score" class="hud-value">0</span></div>
+            <div><span class="hud-stat charge-text">CHARGES:</span><span id="charges" class="hud-value charge-text">0</span></div>
+        </div>
+        
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div class="scanlines"></div>
+        <div id="glitch-overlay"></div>
+
+        <div id="death-modal">
+            <h1>Collision Detected</h1>
+            <p>Timeline compromised.<br>Cost to rewind: 1 Charge & 2 Tail Segments.</p>
+            <div class="btn-group">
+                <button id="btn-accept" class="btn">Accept Fate</button>
+                <button id="btn-rewind" class="btn btn-rewind">Rewind Time</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over-screen">
+        <h2>RUN TERMINATED</h2>
+        <h3 id="final-score-display"></h3>
+        <button id="restart-btn" class="btn">Initialize New Run</button>
+    </div>
+
+    <script>
+        // DOM Refs
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        const chargesElement = document.getElementById('charges');
+        const deathModal = document.getElementById('death-modal');
+        const btnAccept = document.getElementById('btn-accept');
+        const btnRewind = document.getElementById('btn-rewind');
+        const glitchOverlay = document.getElementById('glitch-overlay');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const consoleDiv = document.getElementById('console');
+        const finalScoreDisplay = document.getElementById('final-score-display');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // Grid Config
+        const gridSize = 20;
+        const tileCount = canvas.width / gridSize;
+
+        // State
+        let snake = [];
+        let dx = 0;
+        let dy = 0;
+        let food = { x: 0, y: 0, type: 'normal', timer: 0 };
+        let score = 0;
+        let foodEaten = 0;
+        let charges = 0;
+        let rewindsUsed = 0;
+        
+        let gameLoopTimeout;
+        let isPaused = false;
+        let isGameOver = false;
+
+        // Time-travel buffer (~2s at 100ms/tick)
+        const historyBuffer = [];
+        const REWIND_FRAMES = 20;
+
+        // Initialization
+        function initGame() {
+            snake = [
+                { x: 10, y: 10 },
+                { x: 10, y: 11 },
+                { x: 10, y: 12 }
+            ];
+            dx = 0;
+            dy = -1;
+            score = 0;
+            foodEaten = 0;
+            charges = 0;
+            rewindsUsed = 0;
+            historyBuffer.length = 0;
+            isPaused = false;
+            isGameOver = false;
+            
+            deathModal.style.display = 'none';
+            glitchOverlay.style.display = 'none';
+            gameOverScreen.style.display = 'none';
+            consoleDiv.style.display = 'block';
+            
+            updateHUD();
+            spawnFood();
+            
+            clearTimeout(gameLoopTimeout);
+            gameLoop();
+        }
+
+        // Input Handling
+        document.addEventListener('keydown', (e) => {
+            if (isPaused || isGameOver) return;
+            
+            switch (e.key) {
+                case 'ArrowUp':
+                case 'w':
+                case 'W':
+                    if (dy === 0) { dx = 0; dy = -1; }
+                    break;
+                case 'ArrowDown':
+                case 's':
+                case 'S':
+                    if (dy === 0) { dx = 0; dy = 1; }
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                case 'A':
+                    if (dx === 0) { dx = -1; dy = 0; }
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                case 'D':
+                    if (dx === 0) { dx = 1; dy = 0; }
+                    break;
+            }
+        });
+
+        // Entity Spawning
+        function spawnFood() {
+            let validSpawn = false;
+            while (!validSpawn) {
+                food.x = Math.floor(Math.random() * tileCount);
+                food.y = Math.floor(Math.random() * tileCount);
+                validSpawn = !snake.some(segment => segment.x === food.x && segment.y === food.y);
+            }
+
+            // Shard drop rate logic (25% chance)
+            if (foodEaten > 0 && foodEaten % 4 === 0) {
+                food.type = 'shard';
+                food.timer = 50;
+            } else {
+                food.type = 'normal';
+                food.timer = 0;
+            }
+        }
+
+        // Buffer Management
+        function recordHistory() {
+            historyBuffer.push({
+                snake: JSON.parse(JSON.stringify(snake)),
+                dx: dx,
+                dy: dy,
+                food: JSON.parse(JSON.stringify(food)),
+                score: score
+            });
+
+            if (historyBuffer.length > REWIND_FRAMES) {
+                historyBuffer.shift(); 
+            }
+        }
+
+        // Tick Loop
+        function gameLoop() {
+            if (isPaused || isGameOver) return;
+
+            update();
+            draw();
+
+            if (!isPaused) {
+                gameLoopTimeout = setTimeout(gameLoop, 100); 
+            }
+        }
+
+        // Logic processing
+        function update() {
+            recordHistory();
+
+            const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+            let collision = false;
+            
+            // Bounds checking
+            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                collision = true;
+            }
+            if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+                collision = true;
+            }
+
+            if (collision) {
+                triggerDeathSequence();
+                return; 
+            }
+
+            snake.unshift(head);
+
+            if (head.x === food.x && head.y === food.y) {
+                foodEaten++;
+                if (food.type === 'shard') {
+                    charges++;
+                    snake.pop(); 
+                } else {
+                    score += 100;
+                }
+                spawnFood();
+                updateHUD();
+            } else {
+                snake.pop();
+            }
+
+            // Shard TTL
+            if (food.type === 'shard') {
+                food.timer--;
+                if (food.timer <= 0) {
+                    food.type = 'normal';
+                }
+            }
+        }
+
+        // Render pipeline
+        function draw() {
+            ctx.fillStyle = '#111111';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = '#222222';
+            for (let i = 0; i < tileCount; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * gridSize, 0);
+                ctx.lineTo(i * gridSize, canvas.height);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(0, i * gridSize);
+                ctx.lineTo(canvas.width, i * gridSize);
+                ctx.stroke();
+            }
+
+            if (food.type === 'shard') {
+                ctx.fillStyle = (food.timer % 10 > 5) ? '#ffffff' : '#ffd700'; 
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = '#ffd700';
+            } else {
+                ctx.fillStyle = '#ff4655';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#ff4655';
+            }
+            ctx.fillRect(food.x * gridSize + 2, food.y * gridSize + 2, gridSize - 4, gridSize - 4);
+            ctx.shadowBlur = 0; 
+
+            snake.forEach((segment, index) => {
+                ctx.fillStyle = index === 0 ? '#00ffaa' : '#00cc88';
+                ctx.fillRect(segment.x * gridSize + 1, segment.y * gridSize + 1, gridSize - 2, gridSize - 2);
+            });
+        }
+
+        function updateHUD() {
+            scoreElement.textContent = score;
+            chargesElement.textContent = charges;
+        }
+
+        // State Modifiers & UI
+        function triggerDeathSequence() {
+            isPaused = true;
+            glitchOverlay.style.display = 'block';
+            deathModal.style.display = 'flex';
+
+            if (charges > 0 && historyBuffer.length > 0) {
+                btnRewind.classList.remove('hidden');
+            } else {
+                btnRewind.classList.add('hidden');
+            }
+        }
+
+        btnRewind.addEventListener('click', () => {
+            if (charges <= 0) return;
+            
+            charges--;
+            rewindsUsed++;
+            
+            // Restore from buffer
+            const savedState = historyBuffer[0];
+            
+            snake = JSON.parse(JSON.stringify(savedState.snake));
+            dx = savedState.dx;
+            dy = savedState.dy;
+            food = JSON.parse(JSON.stringify(savedState.food));
+            score = savedState.score;
+            
+            // Apply tail trim penalty
+            let currentLength = snake.length;
+            let targetLength = Math.max(3, currentLength - 2);
+            snake.length = targetLength; 
+            
+            historyBuffer.length = 0; 
+            
+            updateHUD();
+            
+            deathModal.style.display = 'none';
+            glitchOverlay.style.display = 'none';
+            isPaused = false;
+            gameLoop();
+        });
+
+        btnAccept.addEventListener('click', () => {
+            deathModal.style.display = 'none';
+            glitchOverlay.style.display = 'none';
+            consoleDiv.style.display = 'none';
+            
+            let finalScore = score;
+            let bonusText = "";
+            if (rewindsUsed === 0 && score > 0) {
+                finalScore = Math.floor(score * 1.5);
+                bonusText = "<br><span style='color:#ffd700'>CLEAN RUN BONUS! (1.5x)</span>";
+            }
+            
+            finalScoreDisplay.innerHTML = `Final Score: ${finalScore} ${bonusText}`;
+            gameOverScreen.style.display = 'block';
+            isGameOver = true;
+        });
+
+        restartBtn.addEventListener('click', () => {
+            initGame();
+        });
+
+        initGame();
+    </script>
+</body>
+</html>
