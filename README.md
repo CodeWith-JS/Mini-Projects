@@ -344,3 +344,47 @@ script.js
 ```
 
 In short: **`index.html`** provides the empty skeleton and containers, **`script.js`** fills those containers with live data and handles all interaction, and **`style.css`** makes everything look intentional. None of the three files needs to be edited to update the others — new cards, new filters, or new modal content all flow through the same containers already defined in the HTML.
+
+<br>
+<br>
+<hr>
+
+# 10 Chrono Snake
+
+A modern, time-bending twist on the classic grid-based snake game built entirely with HTML5 Canvas and Vanilla JavaScript. 
+
+Instead of relying on perfect reflexes alone, Chrono Snake introduces tactical decision-making, resource management, and risk-vs-reward scoring through its custom-built "History Engine".
+
+## 🚀 What Makes This Unique?
+
+Most snake games end instantly upon collision. Chrono Snake rewrites that rule.
+
+* **The History Engine:** The game silently records a running snapshot buffer of your exact grid coordinates and game state over the last 2 seconds.
+* **Time Travel (Rewind Mechanic):** If you crash, time freezes. If you have banked a Rewind Charge, you can literally turn back the clock to escape death.
+* **The Penalty:** Rewinding isn't a free undo. Using a rewind costs 1 charge, reverses your position, and *permanently* trims 2 segments off your tail. Surviving via time travel shrinks your legacy.
+* **Clean Run Economy:** Using a rewind saves your life, but finishing a run with zero rewinds grants a massive **1.5x multiplier** to your final score. 
+
+## 🎮 Game Rules & Mechanics
+
+1. **Movement:** Standard `WASD` or `Arrow Keys`. You cannot reverse directly into yourself.
+2. **Growth:** Eat standard Red Packets to grow your tail by 1 segment and gain 100 points.
+3. **Chrono Shards:** Every 4th item spawned is a golden Chrono Shard. 
+    * *Time-to-Live (TTL):* Shards expire after 50 ticks of movement and revert back to standard food. 
+    * *Banking:* Eating a Shard does not grow your tail. Instead, it banks 1 Rewind Charge.
+4. **Death & Decisions:** Crashing into a wall or your own tail triggers a system freeze.
+    * **Accept Fate:** Ends the run and calculates your final score.
+    * **Rewind Time:** Consumes a charge, drops you 2 seconds in the past, and deletes 2 tail segments.
+
+## 🛠️ Tech Stack
+
+* **HTML5 Canvas:** For high-performance 2D grid rendering.
+* **CSS3:** Custom minimalist dark theme (`#1a1a1a`), CSS Grid, and CRT scanline/glitch overlay effects (`mix-blend-mode`, `@keyframes`).
+* **Vanilla JavaScript:** Zero dependencies. Handles the 10FPS game loop (`setTimeout`), array buffer manipulation for state saving, and collision detection logic. 
+
+## ⚙️ Installation & Setup
+
+No build steps, no package managers. 
+
+1. Clone the repository or download the source code.
+2. Open `index.html` directly in any modern web browser.
+3. Add your own background fallback URL in the CSS if desired. 
