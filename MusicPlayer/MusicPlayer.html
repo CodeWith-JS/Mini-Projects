@@ -1,4 +1,4 @@
-//MADE BY CODEWITH-JS
+//Made BY CodeWith_JS
 
 <!DOCTYPE html>
 <html lang="en">
@@ -136,8 +136,8 @@
             justify-content: center;
             align-items: center;
             gap: 18px; 
-            position: relative; /* Added this */
-            width: 100%;        /* Added this */
+            position: relative; 
+            width: 100%;        
         }
         .btn {
             background: none;
@@ -188,6 +188,62 @@
             position: absolute; 
             right: 0;           
         }
+
+        .volume-container {
+            position: absolute;
+            
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 30;
+            padding: 10px; 
+            bottom: 5px; 
+        }
+
+        #mute-btn {
+            color: #888888;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+
+        .volume-container:hover #mute-btn {
+            color: #ffffff;
+        }
+
+        /* The hidden box that pops up above the speaker icon */
+        .slider-popup {
+            position: absolute;
+            bottom: 40px; 
+            background-color: #333333;
+            border-radius: 8px;
+            width: 32px;
+            height: 0; /* Shrinks to nothing when hidden */
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
+
+        /* Reveals the box when you hover anywhere near the speaker */
+        .volume-container:hover .slider-popup {
+            height: 110px;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Rotates the standard horizontal slider to point vertically */
+        #volume-bar {
+            transform: rotate(-90deg);
+            width: 80px; /* This controls the HEIGHT of the vertical slider */
+            height: 4px; /* This controls the THICKNESS */
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -210,6 +266,14 @@
         </div>
 
         <div class="controls">
+            
+           <div class="volume-container">
+            <div class="slider-popup">
+                <input type="range" id="volume-bar" value="100" min="0" max="100">
+            </div>
+            <span id="mute-btn" onclick="toggleMute()">&#128266;</span>
+        </div>
+
             <button class="btn" onclick="prevTrack()">&#9194;</button>
             <button class="btn btn-play" onclick="togglePlay()">
                 <span id="play-icon">&#9654;</span>
@@ -349,6 +413,44 @@
                 nextTrack();
             }
         });
+
+        // --- Volume Controls ---
+        const volumeBar = document.getElementById('volume-bar');
+        const muteBtn = document.getElementById('mute-btn');
+        let previousVolume = 1; // Default to 100%
+
+        audio.volume = 1; // Set initial audio engine volume
+
+        volumeBar.addEventListener('input', (e) => {
+            const vol = e.target.value / 100;
+            audio.volume = vol;
+            updateVolumeIcon(vol);
+        });
+
+        function toggleMute() {
+            if (audio.volume > 0) {
+                // Save current volume and mute
+                previousVolume = audio.volume;
+                audio.volume = 0;
+                volumeBar.value = 0;
+                muteBtn.innerHTML = '&#128263;'; // Muted icon
+            } else {
+                // Restore previous volume
+                audio.volume = previousVolume;
+                volumeBar.value = previousVolume * 100;
+                updateVolumeIcon(previousVolume);
+            }
+        }
+
+        function updateVolumeIcon(vol) {
+            if (vol === 0) {
+                muteBtn.innerHTML = '&#128263;'; // Muted
+            } else if (vol < 0.5) {
+                muteBtn.innerHTML = '&#128265;'; // Low volume
+            } else {
+                muteBtn.innerHTML = '&#128266;'; // High volume
+            }
+        }
 
         loadTrack(currentTrackIndex);
     </script>
