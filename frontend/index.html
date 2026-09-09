@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LinkShield — URL Security Scanner</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- ==============================
+         BACKGROUND
+    ================================= -->
+
+    <div class="background">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid"></div>
+    </div>
+
+
+    <!-- ==============================
+         NAVBAR
+    ================================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">🛡</div>
+
+            <span>
+                Link<span>Shield</span>
+            </span>
+        </div>
+
+
+        <nav>
+            <a href="#scanner">Scanner</a>
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <a href="login.html" class="login-btn">
+                Login
+            </a>
+
+            <a href="register.html" class="signup-btn">
+                Get Started
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==============================
+         MAIN
+    ================================= -->
+
+    <main>
+
+
+        <!-- ==============================
+             HERO
+        ================================= -->
+
+        <section class="hero">
+
+            <div class="badge">
+
+                <span class="pulse"></span>
+
+                Real-time URL security analysis
+
+            </div>
+
+
+            <h1>
+                Don't click.
+                <br>
+
+                <span>Check first.</span>
+            </h1>
+
+
+            <p class="hero-text">
+
+                LinkShield analyzes suspicious URLs and helps you
+                understand whether a link is safe before you open it.
+
+            </p>
+
+
+            <!-- ==============================
+                 SCANNER
+            ================================= -->
+
+            <div class="scanner-card" id="scanner">
+
+
+                <div class="scanner-header">
+
+                    <div>
+
+                        <span class="scanner-label">
+                            URL SECURITY SCANNER
+                        </span>
+
+                        <h2>
+                            Analyze a link
+                        </h2>
+
+                    </div>
+
+
+                    <div class="status">
+
+                        <span></span>
+
+                        SYSTEM ONLINE
+
+                    </div>
+
+                </div>
+
+
+                <!-- URL INPUT -->
+
+                <div class="input-wrapper">
+
+                    <div class="url-icon">
+                        🔗
+                    </div>
+
+
+                    <input
+                        type="text"
+                        id="urlInput"
+                        placeholder="https://example.com"
+                        autocomplete="off"
+                    >
+
+
+                    <button
+                        id="scanButton"
+                        type="button"
+                    >
+                        Scan URL
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+
+                <!-- Scanner information -->
+
+                <div class="scanner-info">
+
+                    <span>
+                        🔒 Your URL is analyzed securely
+                    </span>
+
+                    <span>
+                        ⚡ Results in seconds
+                    </span>
+
+                </div>
+
+
+                <!-- ==============================
+                     SCAN RESULT
+                ================================= -->
+
+                <div
+                    id="scanResult"
+                    class="scan-result hidden"
+                >
+
+
+                    <!-- Result header -->
+
+                    <div class="result-top">
+
+                        <div>
+
+                            <span class="scanner-label">
+                                SECURITY ANALYSIS
+                            </span>
+
+                            <h3>
+                                Scan complete
+                            </h3>
+
+                        </div>
+
+
+                        <div
+                            id="riskBadge"
+                            class="risk-badge"
+                        >
+                            LOW RISK
+                        </div>
+
+                    </div>
+
+
+                    <!-- Score -->
+
+                    <div class="score-section">
+
+
+                        <div class="score-circle">
+
+                            <div>
+
+                                <strong id="scoreValue">
+                                    0
+                                </strong>
+
+                                <span>
+                                    /100
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="score-info">
+
+                            <span class="score-label">
+                                SECURITY SCORE
+                            </span>
+
+
+                            <h4 id="resultTitle">
+                                Safe to proceed
+                            </h4>
+
+
+                            <p id="resultMessage">
+                                Analysis completed.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Scanned URL -->
+
+                    <div class="scanned-url">
+
+                        <span>
+                            SCANNED URL
+                        </span>
+
+
+                        <p id="resultURL">
+                            https://example.com
+                        </p>
+
+                    </div>
+
+
+                    <!-- Security checks -->
+
+                    <div class="checks">
+
+                        <div class="checks-header">
+                            SECURITY CHECKS
+                        </div>
+
+
+                        <div id="checksList">
+
+                            <!-- JavaScript inserts checks here -->
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             FEATURES
+        ================================= -->
+
+        <section
+            class="features"
+            id="features"
+        >
+
+            <div class="section-heading">
+
+                <span>
+                    WHY LINKSHIELD
+                </span>
+
+
+                <h2>
+                    Know before you click.
+                </h2>
+
+
+                <p>
+                    Multiple security checks. One simple result.
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+
+                <!-- Feature 1 -->
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🔍
+                    </div>
+
+
+                    <h3>
+                        URL Analysis
+                    </h3>
+
+
+                    <p>
+                        Analyze URL structure, parameters,
+                        ports, protocols and suspicious patterns.
+                    </p>
+
+                </div>
+
+
+                <!-- Feature 2 -->
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        ⚠️
+                    </div>
+
+
+                    <h3>
+                        Threat Detection
+                    </h3>
+
+
+                    <p>
+                        Identify potentially dangerous keywords,
+                        phishing patterns and unusual URLs.
+                    </p>
+
+                </div>
+
+
+                <!-- Feature 3 -->
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        📊
+                    </div>
+
+
+                    <h3>
+                        Security Score
+                    </h3>
+
+
+                    <p>
+                        Get a simple security score from 0 to 100
+                        with an easy-to-understand risk level.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             CTA
+        ================================= -->
+
+        <section
+            class="cta"
+            id="about"
+        >
+
+            <div>
+
+                <span>
+                    START PROTECTING YOUR CLICKS
+                </span>
+
+
+                <h2>
+                    Build better browsing habits.
+                </h2>
+
+            </div>
+
+
+            <a
+                href="#scanner"
+                class="cta-button"
+            >
+                Scan a URL →
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==============================
+         FOOTER
+    ================================= -->
+
+    <footer>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🛡
+            </div>
+
+
+            <span>
+                Link<span>Shield</span>
+            </span>
+
+        </div>
+
+
+        <p>
+            © 2026 LinkShield. Built for safer browsing.
+        </p>
+
+    </footer>
+
+
+    <!-- ==============================
+         JAVASCRIPT
+    ================================= -->
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
