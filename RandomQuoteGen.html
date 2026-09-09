@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Generator</title>
+    <style>
+        /* CSS: Minimalist Dark Theme */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #eeeeee;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .quote-card {
+            background-color: #262626;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border-left: 5px solid #666666;
+            transition: all 0.3s ease;
+        }
+
+        #quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            min-height: 80px; /* Prevents button from jumping too much */
+        }
+
+        #quote-author {
+            font-size: 1rem;
+            color: #999999;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background-color: #404040;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #595959;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HTML: The Layout -->
+    <div class="quote-card">
+        <div id="quote-text">"Click the button to reveal a quote."</div>
+        <div id="quote-author">- System</div>
+        <button class="btn" onclick="generateQuote()">Generate Quote</button>
+    </div>
+
+    <!-- JavaScript: The Logic -->
+    <script>
+        // 1. Store our data in an array of objects
+        const quotes = [
+            {
+                text: "If you don't fight, you can't win.",
+                author: "Eren Yeager (Attack on Titan)"
+            },
+            {
+                text: "I'm just a guy who's a hero for fun.",
+                author: "Saitama (One Punch Man)"
+            },
+            {
+                text: "If there are devils that could be friends, then yeah, I do... cuz I don't have any.",
+                author: "Denji (Chainsaw Man)"
+            },
+            {
+                text: "People, who can’t throw something important away, can never hope to change anything.",
+                author: "Armin Arlert (Attack on Titan)"
+            },
+            {
+                text: "I'll leave tomorrow's problems to tomorrow's me.",
+                author: "Saitama (One Punch Man)"
+            }
+            ,
+            {
+                text: "I don't know how I'll feel when I'm dead, but I don't want to regret the way I lived.",
+                author: "Yuji Itadori"
+            }
+            ,
+            {
+                text: "Giving up halfway is worse than never trying at all.",
+                author: "Misato Katsuragi"
+            }
+            ,
+            {
+                text: "If you don’t take risks, you can’t create a future!",
+                author: "Monkey D. Luffy"
+            }
+            ,
+            {
+                text: "If you win, you live. If you lose, you die. If you don’t fight, you can’t win",
+                author: "Eren Yaeger"
+            }
+            ,
+            {
+                text: "If you don’t share someone’s pain, you can never understand them.",
+                author: "Nagato"
+
+            }
+            ,
+            {
+                text: "Hard work is worthless for those that don’t believe in themselves",
+                author: "Naruto Uzumaki"
+            }
+            ,
+            {
+                text: "If you really want to be strong… Stop caring about what your surrounding thinks of you!",
+                author: "Saitama (One Punch Man)"
+            }
+            
+        ];
+
+        // 2. The function that runs when the button is clicked
+        function generateQuote() {
+            // Generate a random number between 0 and the length of the array
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            
+            // Select the quote object at that random index
+            const selectedQuote = quotes[randomIndex];
+            
+            // Update the HTML elements with the new data
+            document.getElementById('quote-text').textContent = `"${selectedQuote.text}"`;
+            document.getElementById('quote-author').textContent = `- ${selectedQuote.author}`;
+        }
+
+        // Optional: Generate a quote immediately when the page loads
+        generateQuote();
+    </script>
+</body>
+</html>

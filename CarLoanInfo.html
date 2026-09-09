@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Loan Calculator</title>
+    <style>
+        /* CSS: Minimalist Dark Theme */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #eeeeee;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calculator-card {
+            background-color: #262626;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: #aaaaaa;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input {
+            background-color: #1a1a1a;
+            border: 1px solid #404040;
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        input:focus {
+            border-color: #666666;
+        }
+
+        .btn {
+            background-color: #404040;
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #595959;
+        }
+
+        /* Error Message Styling */
+        #error-msg {
+            color: #ff5252;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* New Structured Results Container */
+        #results-container {
+            display: none; /* Hidden until calculated */
+            background-color: #1a1a1a;
+            border: 1px solid #404040;
+            border-radius: 6px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        #results-container.visible {
+            display: block;
+        }
+
+        .result-section {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333333;
+        }
+
+        .result-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .result-section h3 {
+            color: #999999;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #dddddd;
+        }
+
+        .result-row.highlight-text {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .monthly-payment-display {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #4CAF50;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-card">
+        <h2>Loan Calculator</h2>
+        
+        <div class="input-group">
+            <label for="car-price">1. Total Value of Car </label>
+            <input type="number" id="car-price" placeholder="e.g. 25000">
+        </div>
+
+        <div class="input-group">
+            <label for="interest-rate">2. Interest Rate (%)</label>
+            <input type="number" id="interest-rate" placeholder="e.g. 5.5" step="0.1">
+        </div>
+
+        <div class="input-group">
+            <label for="loan-term">3. Loan Term (Months)</label>
+            <input type="number" id="loan-term" placeholder="e.g. 60">
+        </div>
+
+        <div class="input-group">
+            <label for="down-payment">4. Down Payment  </label>
+            <input type="number" id="down-payment" placeholder="e.g. 5000">
+        </div>
+
+        <div id="error-msg">Please enter valid numbers for all required fields.</div>
+
+        <button class="btn" onclick="calculateLoan()">Calculate</button>
+
+        <!-- Structured Results Output -->
+        <div id="results-container">
+            <div class="result-section">
+                <h3>Loan Summary (Entered Values)</h3>
+                <div class="result-row"><span>Car Value:</span> <span id="out-car-price"></span></div>
+                <div class="result-row"><span>Down Payment:</span> <span id="out-down-payment"></span></div>
+                <div class="result-row"><span>Total Loan Amount:</span> <span id="out-principal"></span></div>
+            </div>
+
+                <div class="result-section">
+                    <h3>Estimated Monthly Payment</h3>
+                <div class="monthly-payment-display">₹<span id="out-monthly"></span></div>
+            </div>
+
+            <div class="result-section">
+                <h3>Total Cost Breakdown</h3>
+                <div class="result-row"><span>Total Interest Paid:</span> <span id="out-interest"></span></div>
+                <div class="result-row highlight-text"><span>Total Cost of Car:</span> <span id="out-total-cost"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateLoan() {
+            // Reset UI states
+            document.getElementById('error-msg').style.display = 'none';
+            document.getElementById('results-container').classList.remove('visible');
+
+            // Retrieve input values
+            const carPrice = parseFloat(document.getElementById('car-price').value);
+            const interestRate = parseFloat(document.getElementById('interest-rate').value);
+            const loanTerm = parseInt(document.getElementById('loan-term').value);
+            let downPayment = parseFloat(document.getElementById('down-payment').value);
+
+            // Handle empty down payment
+            if (isNaN(downPayment)) {
+                downPayment = 0;
+            }
+
+            // Validation: Ensure main fields are filled properly
+            if (isNaN(carPrice) || isNaN(interestRate) || isNaN(loanTerm) || carPrice <= 0 || loanTerm <= 0) {
+                document.getElementById('error-msg').style.display = 'block';
+                return;
+            }
+
+            // Core Calculations
+            const principal = carPrice - downPayment;
+            
+            // Prevent negative loans
+            if (principal <= 0) {
+                document.getElementById('error-msg').textContent = "Down payment cannot be greater than or equal to car value.";
+                document.getElementById('error-msg').style.display = 'block';
+                return;
+            }
+
+            const monthlyInterestRate = (interestRate / 100) / 12;
+            let monthlyPayment = 0;
+            
+            // Standard Amortization Formula
+            if (monthlyInterestRate === 0) {
+                monthlyPayment = principal / loanTerm;
+            } else {
+                monthlyPayment = principal * (monthlyInterestRate * Math.pow((1 + monthlyInterestRate), loanTerm)) / (Math.pow((1 + monthlyInterestRate), loanTerm) - 1);
+            }
+
+            const totalAmountPaid = monthlyPayment * loanTerm;
+            const totalInterestPaid = totalAmountPaid - principal;
+            const totalCostOfCar = totalAmountPaid + downPayment;
+
+            // Populate the HTML elements with the calculated data
+           // Populate the HTML elements with the calculated data using ₹
+            document.getElementById('out-car-price').textContent = `₹${carPrice.toFixed(2)}`;
+            document.getElementById('out-down-payment').textContent = `₹${downPayment.toFixed(2)}`;
+            document.getElementById('out-principal').textContent = `₹${principal.toFixed(2)}`;
+            document.getElementById('out-monthly').textContent = monthlyPayment.toFixed(2);
+            document.getElementById('out-interest').textContent = `₹${totalInterestPaid.toFixed(2)}`;
+            document.getElementById('out-total-cost').textContent = `₹${totalCostOfCar.toFixed(2)}`;
+
+            // Reveal the results container
+            document.getElementById('results-container').classList.add('visible');
+        }
+    </script>
+</body>
+</html>
