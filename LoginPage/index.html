@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="background">
+
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+
+        <div class="grid"></div>
+
+    </div>
+
+    <!-- Mouse Glow -->
+    <div class="mouse-glow"></div>
+
+
+    <!-- Login Container -->
+    <main class="login-container">
+
+        <section class="login-card">
+
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">J</div>
+            </div>
+
+            <!-- Heading -->
+            <div class="heading">
+
+                <span class="welcome">WELCOME BACK</span>
+
+                <h1>
+                    Enter the <span>Nova</span>
+                </h1>
+
+                <p>
+                    Sign in to continue your journey.
+                </p>
+
+            </div>
+
+
+            <!-- Login Form -->
+            <form id="loginForm">
+
+                <!-- Email -->
+                <div class="input-group">
+
+                    <label for="email">
+                        Email address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="input-group">
+
+                    <div class="password-label">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <a href="#">
+                            Forgot?
+                        </a>
+
+                    </div>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ◈
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                    <!-- Password Strength -->
+                    <div class="strength-container">
+
+                        <div class="strength-bars">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                        <small id="strengthText">
+                            Enter password
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Remember -->
+                <div class="options">
+
+                    <label class="remember">
+
+                        <input type="checkbox">
+
+                        <span class="checkmark"></span>
+
+                        Remember me
+
+                    </label>
+
+                </div>
+
+
+                <!-- Login Button -->
+                <button
+                    type="submit"
+                    class="login-btn"
+                    id="loginBtn"
+                >
+
+                    <span class="btn-text">
+                        Sign In
+                    </span>
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- Divider -->
+            <div class="divider">
+
+                <span></span>
+
+                <p>OR CONTINUE WITH</p>
+
+                <span></span>
+
+            </div>
+
+
+            <!-- Social Login -->
+            <div class="social-login">
+
+                <button type="button">
+                    <strong>G</strong>
+                    Google
+                </button>
+
+                <button type="button">
+                    <strong>⌘</strong>
+                    GitHub
+                </button>
+
+            </div>
+
+
+            <!-- Register -->
+            <div class="register">
+
+                Don't have an account?
+
+                <a href="#">
+                    Create account
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
+```
